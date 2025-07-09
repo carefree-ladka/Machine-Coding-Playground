@@ -2,30 +2,12 @@ import * as React from "react";
 import styled from "styled-components";
 
 const images = [
-  {
-    src: "https://picsum.photos/id/600/600/400",
-    alt: "Forest",
-  },
-  {
-    src: "https://picsum.photos/id/100/600/400",
-    alt: "Beach",
-  },
-  {
-    src: "https://picsum.photos/id/200/600/400",
-    alt: "Yak",
-  },
-  {
-    src: "https://picsum.photos/id/300/600/400",
-    alt: "Hay",
-  },
-  {
-    src: "https://picsum.photos/id/400/600/400",
-    alt: "Plants",
-  },
-  {
-    src: "https://picsum.photos/id/500/600/400",
-    alt: "Building",
-  },
+  { src: "https://picsum.photos/id/600/600/400", alt: "Forest" },
+  { src: "https://picsum.photos/id/100/600/400", alt: "Beach" },
+  { src: "https://picsum.photos/id/200/600/400", alt: "Yak" },
+  { src: "https://picsum.photos/id/300/600/400", alt: "Hay" },
+  { src: "https://picsum.photos/id/400/600/400", alt: "Plants" },
+  { src: "https://picsum.photos/id/500/600/400", alt: "Building" },
 ];
 
 interface Slide {
@@ -52,12 +34,19 @@ const SlideContainer = styled.div`
   position: relative;
   height: 400px;
   width: 600px;
+  overflow: hidden;
+`;
+
+const SlidesWrapper = styled.div`
+  display: flex;
+  transition: transform 0.5s ease-in-out;
 `;
 
 const Image = styled.img`
-  height: 100%;
-  width: 100%;
+  height: 400px;
+  width: 600px;
   object-fit: cover;
+  flex-shrink: 0;
 `;
 
 const SlideShowButtonsLayout = styled.div``;
@@ -89,36 +78,21 @@ const DotContainer = styled.div`
   display: flex;
 `;
 
-const Dot = styled.span`
+const Dot = styled.span<{ active?: boolean }>`
   margin-right: 1rem;
   height: 15px;
   width: 15px;
   border-radius: 50%;
-  background-color: #222;
-  z-index: 2;
+  background-color: ${({ active }) => (active ? "#555" : "#ccc")};
   cursor: pointer;
 `;
 
 const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
-  const { slides, autoPlay, loop, interval = 200 } = props;
+  const { slides, autoPlay, loop, interval = 2000 } = props;
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const TOTAL_SLIDES = slides.length - 1;
-
-  React.useEffect(() => {
-    if (autoPlay) {
-      timerRef.current = setInterval(() => {
-        handleSlideNext();
-      }, interval);
-    }
-
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    };
-  }, []);
 
   const handleSlideNext = () => {
     if (currentSlide < TOTAL_SLIDES) {
@@ -136,6 +110,19 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
     }
   };
 
+  React.useEffect(() => {
+    if (!autoPlay) return;
+    timerRef.current = setTimeout(() => {
+      handleSlideNext();
+    }, interval);
+
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, [currentSlide, interval, autoPlay]);
+
   const handleSlide = (idx: number) => {
     setCurrentSlide(idx);
   };
@@ -143,10 +130,13 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   return (
     <CarouselLayout>
       <SlideContainer>
-        <Image
-          src={slides[currentSlide].src}
-          alt={slides[currentSlide].alt ?? "slide"}
-        />
+        <SlidesWrapper
+          style={{ transform: `translateX(-${currentSlide * 600}px)` }}
+        >
+          {slides.map((slide, index) => (
+            <Image key={index} src={slide.src} alt={slide.alt} loading="lazy" />
+          ))}
+        </SlidesWrapper>
 
         <SlideShowButtonsLayout>
           <SlideShowPrevButton onClick={handleSlidePrev}>❮</SlideShowPrevButton>
@@ -155,8 +145,12 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
       </SlideContainer>
 
       <DotContainer>
-        {Array.from({ length: TOTAL_SLIDES }, (_, i) => (
-          <Dot onClick={() => handleSlide(i + 1)} />
+        {Array.from({ length: TOTAL_SLIDES + 1 }, (_, i) => (
+          <Dot
+            key={i}
+            active={i === currentSlide}
+            onClick={() => handleSlide(i)}
+          />
         ))}
       </DotContainer>
     </CarouselLayout>
@@ -164,10 +158,5 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 };
 
 export const SlideShow: React.FC = () => {
-  return <Carousel slides={images} interval={200} />;
+  return <Carousel slides={images} autoPlay loop />;
 };
-
-/*
-prev [] next
-dots 1 2 3 4 5
-*/
