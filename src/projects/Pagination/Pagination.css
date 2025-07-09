@@ -1,0 +1,85 @@
+.pagination-container {
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  max-width: 600px;
+  margin: auto;
+}
+
+.pagination-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.limit-select {
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}
+
+.posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+}
+
+.posts-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.pagination-pages {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.page-number {
+  padding: 0.4rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page-number:hover {
+  background-color: #f0f0f0;
+}
+
+.page-number.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination-summary {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+
+.pagination-bar button {
+  padding: 0.4rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.pagination-bar button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pagination-bar button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

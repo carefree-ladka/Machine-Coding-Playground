@@ -1,0 +1,18 @@
+export const projectsConfig = [
+  {
+    path: "/infinite-scroller",
+    title: "Infinite Scroller",
+    description: "Infinite scroll / Load more",
+  },
+    {
+    path: "/pagination",
+    title: "Pagination",
+    description: "Pagination",
+  },
+  {
+    path: "/carousel",
+    title: "Carousel",
+    description: "Carousel",
+  },
+  //add more...
+];
