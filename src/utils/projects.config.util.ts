@@ -14,5 +14,10 @@ export const projectsConfig = [
     title: "Carousel",
     description: "Carousel",
   },
+    {
+    path: "/progress-bar",
+    title: "Progress Bar",
+    description: "Progress Bar",
+  },
   //add more...
 ];

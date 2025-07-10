@@ -92,11 +92,11 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
   const [currentSlide, setCurrentSlide] = React.useState(0);
   const timerRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const TOTAL_SLIDES = slides.length - 1;
+  const TOTAL_SLIDES = slides.length;
 
   const handleSlideNext = () => {
     if (currentSlide < TOTAL_SLIDES) {
-      setCurrentSlide((prev) => prev + 1);
+      setCurrentSlide((prev) => (prev + 1) % TOTAL_SLIDES);
     } else if (loop) {
       setCurrentSlide(0);
     }
@@ -104,7 +104,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 
   const handleSlidePrev = () => {
     if (currentSlide > 0) {
-      setCurrentSlide((prev) => prev - 1);
+      setCurrentSlide((prev) => (prev - 1 + TOTAL_SLIDES) % TOTAL_SLIDES);
     } else if (loop) {
       setCurrentSlide(TOTAL_SLIDES);
     }
@@ -127,17 +127,19 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
     setCurrentSlide(idx);
   };
 
+  const getNextSlides = () => {
+    return [
+      slides[currentSlide],
+      slides[(currentSlide + 1) % TOTAL_SLIDES],
+    ].map((slide) => <Image src={slide.src} alt={slide.alt} loading="lazy" />);
+  };
+
   return (
     <CarouselLayout>
       <SlideContainer>
-        <SlidesWrapper
-          style={{ transform: `translateX(-${currentSlide * 600}px)` }}
-        >
-          {slides.map((slide, index) => (
-            <Image key={index} src={slide.src} alt={slide.alt} loading="lazy" />
-          ))}
+        <SlidesWrapper style={{ transform: `translateX(-${0}px)` }}>
+          {getNextSlides()}
         </SlidesWrapper>
-
         <SlideShowButtonsLayout>
           <SlideShowPrevButton onClick={handleSlidePrev}>❮</SlideShowPrevButton>
           <SlideShowNextButton onClick={handleSlideNext}>❯</SlideShowNextButton>
@@ -145,7 +147,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
       </SlideContainer>
 
       <DotContainer>
-        {Array.from({ length: TOTAL_SLIDES + 1 }, (_, i) => (
+        {Array.from({ length: TOTAL_SLIDES }, (_, i) => (
           <Dot
             key={i}
             active={i === currentSlide}
@@ -158,5 +160,7 @@ const Carousel: React.FC<CarouselProps> = (props: CarouselProps) => {
 };
 
 export const SlideShow: React.FC = () => {
-  return <Carousel slides={images} autoPlay loop />;
+  return <Carousel slides={images} loop />;
 };
+
+
