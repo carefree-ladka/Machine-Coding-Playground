@@ -4,7 +4,7 @@ export const projectsConfig = [
     title: "Infinite Scroller",
     description: "Infinite scroll / Load more",
   },
-    {
+  {
     path: "/pagination",
     title: "Pagination",
     description: "Pagination",
@@ -14,15 +14,45 @@ export const projectsConfig = [
     title: "Carousel",
     description: "Carousel",
   },
-    {
+  {
     path: "/progress-bar",
     title: "Progress Bar",
     description: "Progress Bar",
   },
-   {
+  {
     path: "/accordion",
     title: "Accordion",
     description: "Accordion",
   },
+  {
+    path: "/data-table",
+    title: "Data Table",
+    description: "Data Table",
+  },
+  {
+    path: "/data-table",
+    title: "Data Table",
+    description: "Data Table",
+  },
+  {
+    path: "/traffic-light",
+    title: "Traffic Light",
+    description: "Traffic Light",
+  },
+    {
+    path: "/tictactoe",
+    title: "Tic Tac Toe",
+    description: "Tic Tac Toe",
+  },
+  {
+    path: "/autocomplete",
+    title: "AutoComplete / Typeahead",
+    description: "AutoComplete / Typeahead",
+  },
+    {
+    path: "/todo-list",
+    title: "Todo List",
+    description: "Todo List",
+  }
   //add more...
 ];
