@@ -19,5 +19,10 @@ export const projectsConfig = [
     title: "Progress Bar",
     description: "Progress Bar",
   },
+   {
+    path: "/accordion",
+    title: "Accordion",
+    description: "Accordion",
+  },
   //add more...
 ];
