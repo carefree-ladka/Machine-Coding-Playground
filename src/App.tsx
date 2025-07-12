@@ -8,6 +8,8 @@ import {
   ProgressBar,
   SlideShow,
   StarRating,
+  TicTacToe,
+  TrafficLights,
 } from "./projects";
 
 const App: React.FC = () => {
@@ -21,6 +23,8 @@ const App: React.FC = () => {
         <Route path="/accordion" element={<Accordion />} />
         <Route path="/star-rating" element={<StarRating />} />
         <Route path="/data-table" element={<DataTable />} />
+        <Route path="/tictactoe" element={<TicTacToe />} />
+        <Route path="/traffic-light" element={<TrafficLights />} />
       </Routes>
     </BrowserRouter>
   );

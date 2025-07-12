@@ -1,1 +1,1 @@
-// export * from './InfiniteScroller';
+export * from './InfiniteScroller';

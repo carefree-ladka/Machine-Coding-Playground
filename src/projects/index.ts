@@ -5,3 +5,5 @@ export * from './Pagination';
 export * from './ProgressBar';
 export * from './SlideShow';
 export * from './StarRating';
+export * from './TicTacToe';
+export * from './TrafficLight';
