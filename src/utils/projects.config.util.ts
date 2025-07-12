@@ -24,10 +24,10 @@ export const projectsConfig = [
     title: "Accordion",
     description: "Accordion",
   },
-  {
-    path: "/data-table",
-    title: "Data Table",
-    description: "Data Table",
+    {
+    path: "/star-rating",
+    title: "Star Rating",
+    description: "Star Rating",
   },
   {
     path: "/data-table",
