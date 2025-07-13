@@ -4,6 +4,7 @@ import {
   Accordion,
   DataTable,
   FileExplorer,
+  FormBuilder,
   KanbanBoard,
   Pagination,
   ProgressBar,
@@ -13,7 +14,6 @@ import {
   Toast,
   TrafficLights,
 } from "../projects";
-import { FormBuilder } from "../projects/FormBuilder";
 
 interface Project {
   path: string;
