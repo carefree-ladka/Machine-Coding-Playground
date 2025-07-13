@@ -2,18 +2,9 @@ import * as React from "react";
 import styled from "styled-components";
 
 const lightsConfig = [
-  {
-    color: "red",
-    duration: 3000,
-  },
-  {
-    color: "yellow",
-    duration: 4000,
-  },
-  {
-    color: "green",
-    duration: 1000,
-  },
+  { color: "red", duration: 3000 },
+  { color: "yellow", duration: 4000 },
+  { color: "green", duration: 5000 },
 ];
 
 const TrafficLightsLayout = styled.div`
@@ -43,48 +34,48 @@ const TimerText = styled.p`
   font-size: 14px;
 `;
 
-const Light: React.FC<LightProps> = (props: LightProps) => {
-  const { color, isOn } = props;
+const Light: React.FC<LightProps> = ({ color, isOn }) => {
   return <Bulb isOn={isOn} color={color} />;
 };
 
 export const TrafficLights: React.FC = () => {
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [remainingTime, setRemainingTime] = React.useState(
-    lightsConfig[currentIndex].duration
+    lightsConfig[0].duration
   );
 
-//   React.useEffect(() => {
-//     const timer = setTimeout(() => {
-//       setRemainingTime((prev) => prev - 1000);
-//     }, 1000);
+  React.useEffect(() => {
+    if (remainingTime <= 0) return;
 
-//     return () => clearTimeout(timer);
-//   }, [currentIndex]);
+    const timeout = setTimeout(() => {
+      setRemainingTime((prev) => prev - 1000);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, [remainingTime]);
 
   React.useEffect(() => {
     const { duration } = lightsConfig[currentIndex];
 
     const timer = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % lightsConfig.length);
-    //   setRemainingTime(duration);
     }, duration);
 
-    return () => {
-      clearTimeout(timer);
-    };
+    setRemainingTime(duration); // Reset countdown
+
+    return () => clearTimeout(timer);
   }, [currentIndex]);
 
   return (
     <TrafficLightsLayout>
-      <h1>Traffic Lights </h1>
+      <h1>Traffic Lights</h1>
       {lightsConfig.map((light, idx) => (
-        <>
+        <React.Fragment key={light.color}>
           <Light color={light.color} isOn={currentIndex === idx} />
-          {/* {currentIndex === idx && (
-            <TimerText> {Math.ceil(remainingTime / 1000)}s</TimerText>
-          )} */}
-        </>
+          {currentIndex === idx && (
+            <TimerText>{Math.ceil(remainingTime / 1000)}s</TimerText>
+          )}
+        </React.Fragment>
       ))}
     </TrafficLightsLayout>
   );

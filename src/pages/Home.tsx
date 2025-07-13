@@ -116,12 +116,15 @@ export const Home = () => {
     <HomeContainer>
       <HomeHeading>Projects & Practice Playground</HomeHeading>
       <ProjectGrid>
-        {projectsConfig.map((project) => (
-          <ProjectCard key={project.path} to={project.path}>
-            <ProjectTitle>{project.title}</ProjectTitle>
-            <ProjectDescription>{project.description}</ProjectDescription>
-          </ProjectCard>
-        ))}
+        {projectsConfig.map((project) => {
+          if (project.path === "/") return null;
+          return (
+            <ProjectCard key={project.path} to={project.path}>
+              <ProjectTitle>{project.title}</ProjectTitle>
+              <ProjectDescription>{project.description}</ProjectDescription>
+            </ProjectCard>
+          );
+        })}
       </ProjectGrid>
     </HomeContainer>
   );
